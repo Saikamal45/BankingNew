@@ -37,7 +37,7 @@ public class SecurityConfig {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationManager authenticationManager)
 			throws Exception {
 		return http.csrf(customizer -> customizer.disable())
-				.authorizeHttpRequests(request -> request.requestMatchers("/account/getAccountById","/user/getUser/**").permitAll()
+				.authorizeHttpRequests(request -> request.requestMatchers("/account-service/account/getAccountById/**","/user/getUser/**","/transactions/deposit").permitAll()
 						.anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())
 				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

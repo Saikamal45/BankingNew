@@ -14,10 +14,12 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import com.banking.transactionService.entity.Transaction;
@@ -27,10 +29,12 @@ import com.banking.transactionService.exception.AccountNotFoundException;
 import com.banking.transactionService.exception.GlobalExceptionHandler;
 import com.banking.transactionService.exception.InsufficientBalanceException;
 import com.banking.transactionService.exception.TransactionNotFoundException;
+import com.banking.transactionService.security.JwtService;
 import com.banking.transactionService.service.TransactionService;
 
+@ExtendWith(SpringExtension.class)
 @WebMvcTest(TransactionController.class)
-@Import(GlobalExceptionHandler.class)
+@Import({GlobalExceptionHandler.class,Transaction.class,JwtService.class})
 public class TransactionControllerTest {
 
 	@Autowired
@@ -43,6 +47,7 @@ public class TransactionControllerTest {
 	
 	@BeforeEach
 	public void setUp() {
+		
 		mockTransaction =new Transaction();
 		mockTransaction.setAccountId(1);
 		mockTransaction.setAmount(1000);
@@ -254,6 +259,7 @@ when(transactionService.withdrawal(1, 5000)).thenThrow(new InsufficientBalanceEx
 		
 		verify(transactionService,times(1)).getLastNTransactions(mockTransaction.getAccountId(), 5);
 	}
+	
 	
 	@Test
 	public void getLastNTransactionsFailureTest() throws Exception {

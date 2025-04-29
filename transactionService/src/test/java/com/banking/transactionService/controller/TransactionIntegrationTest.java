@@ -1,20 +1,14 @@
 package com.banking.transactionService.controller;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import java.time.LocalDateTime;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.jdbc.Sql;
@@ -25,9 +19,7 @@ import com.banking.transactionService.entity.TransactionStatus;
 import com.banking.transactionService.entity.TransactionType;
 import com.banking.transactionService.exception.InsufficientBalanceException;
 import com.banking.transactionService.repository.TransactionRepository;
-import com.banking.transactionService.service.TransactionService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.reflect.ClassPath;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -78,6 +70,10 @@ public class TransactionIntegrationTest {
 	        assert savedTransaction.getTransactionType() == TransactionType.DEPOSIT;
 	        assert savedTransaction.getTransactionCreatedAt() != null;
 	}
+	
+
+
+
 	
 @Test
 public void depositFailureWithInvalidAccountTest() throws Exception {

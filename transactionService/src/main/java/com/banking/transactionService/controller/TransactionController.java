@@ -35,29 +35,29 @@ private static Logger logger=LoggerFactory.getLogger(TransactionController.class
 	@Autowired
 	private TransactionService transactionService;
 	
-	@PreAuthorize("hasRole('Customer')")
+	//@PreAuthorize("hasRole('Customer')")
 	@PutMapping("/deposit")
 	//@CircuitBreaker(name = "accountbreaker",fallbackMethod = "getFallBackResponse")
 	//@Retry(name = "depositRetry",fallbackMethod = "getFallBackResponse")
-	@RateLimiter(name="depositLimiter",fallbackMethod = "getFallBackResponse")
+	//@RateLimiter(name="depositLimiter",fallbackMethod = "getFallBackResponse")
 	public ResponseEntity<Transaction> deposit(@RequestParam int accountId,@RequestParam double  amount)throws AccountNotFoundException, InsufficientBalanceException{
 		Transaction deposit = transactionService.deposit(accountId, amount);
 		return new ResponseEntity<Transaction>(deposit,HttpStatus.OK);
 	}
 	
-	public ResponseEntity<Transaction> getFallBackResponse(int accountId,double amount,Exception exception){
-		Transaction fallBackTransaction=new Transaction();
-		fallBackTransaction.setTransactionId(0);
-		fallBackTransaction.setAccountId(accountId);
-		fallBackTransaction.setAmount(amount);
-		fallBackTransaction.setTransactionStatus(TransactionStatus.PENDING);
-		fallBackTransaction.setTransactionType(TransactionType.DEPOSIT);
-		
-		logger.error("FallBack Triggered due to :{}",exception.getMessage());
-		return new ResponseEntity<Transaction>(fallBackTransaction,HttpStatus.SERVICE_UNAVAILABLE);
-		
-	}
-	
+//	public ResponseEntity<Transaction> getFallBackResponse(int accountId,double amount,Exception exception){
+//		Transaction fallBackTransaction=new Transaction();
+//		fallBackTransaction.setTransactionId(0);
+//		fallBackTransaction.setAccountId(accountId);
+//		fallBackTransaction.setAmount(amount);
+//		fallBackTransaction.setTransactionStatus(TransactionStatus.PENDING);
+//		fallBackTransaction.setTransactionType(TransactionType.DEPOSIT);
+//		
+//		logger.error("FallBack Triggered due to :{}",exception.getMessage());
+//		return new ResponseEntity<Transaction>(fallBackTransaction,HttpStatus.SERVICE_UNAVAILABLE);
+//		
+//	}
+//	
 	@PostMapping("/withdraw")
 	public ResponseEntity<Transaction> withdraw(@RequestParam int accountId,@RequestParam double amount)throws InsufficientBalanceException{
 		Transaction withdrawal = transactionService.withdrawal(accountId, amount);

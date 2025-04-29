@@ -2,24 +2,19 @@ package com.banking.loanservice.serviceImplementation;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-
 import java.time.LocalDate;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-
 import com.banking.loanservice.Dto.AccountDto;
 import com.banking.loanservice.entity.LoanApplication;
 import com.banking.loanservice.entity.LoanDetails;
@@ -28,7 +23,6 @@ import com.banking.loanservice.entity.LoanType;
 import com.banking.loanservice.exception.LoanApplicationNotFoundException;
 import com.banking.loanservice.feignClient.AccountClient;
 import com.banking.loanservice.repository.LoanApplicationRepository;
-import com.fasterxml.jackson.databind.introspect.TypeResolutionContext.Empty;
 
 @ExtendWith(MockitoExtension.class)
 public class LoanServiceImplementationTest {
@@ -36,8 +30,9 @@ public class LoanServiceImplementationTest {
 	@Mock
 	private LoanApplicationRepository loanApplicationRepository;
 	
-	
 	@InjectMocks
+
+	
 	private LoanServiceImplementation loanServiceImplementation;
 	
 	private LoanApplication mockLoanApplication;

@@ -46,6 +46,7 @@ public class TransactionServiceImplTest {
 	
 	@BeforeEach
 	public void setUp() {
+		
 		mockTransaction=new Transaction();
 		mockTransaction.setAccountId(1);
 		mockTransaction.setAmount(2000);
@@ -65,10 +66,14 @@ public class TransactionServiceImplTest {
 		when(accountClient.getAccountById(mockAccount.getAccountId())).thenReturn(mockAccount);
 		when(transactionRepository.findTransactionsByAccountId(1)).thenReturn(List.of(mockTransaction));
 		
+		//ACT
 		List<Transaction> transactionsByAccountId = transactionServiceImpl.getTransactionsByAccountId(mockAccount.getAccountId());
 		
 		
-		assertEquals(mockAccount.getAccountId(), transactionsByAccountId.get(0).getAccountId());
+		assertEquals(1, transactionsByAccountId.get(0).getAccountId());
+		
+		verify(accountClient,times(1)).getAccountById(mockAccount.getAccountId());
+		verify(transactionRepository,times(1)).findTransactionsByAccountId(1);
 	}
 	
 	//Account Exists But No Transactions
